@@ -1,0 +1,50 @@
+scalar DateTime
+type Event {
+  createdAt: DateTime! @fake(type: pastDate)
+  createdByUser: String!
+    @examples(
+      values: [
+        "2ef43e8d-ef62-4a77-a33f-10c73f705127"
+        "1d20e36b-ec7e-4934-abb3-599c3d6704ef"
+        "c31ae9e5-da16-4848-a82f-9762c6202e60"
+        "102e2d65-d791-4407-a304-e2b685a34387"
+        "62d0c96a-38e7-4565-8163-23992f124fb3"
+      ]
+    )
+  endDate: DateTime! @fake(type: futureDate)
+  id: ID! @fake(type: uuid)
+  name: String! @fake(type: companyCatchPhrase)
+  startDate: DateTime! @fake(type: pastDate)
+  subscribedUsers: [User!]! @listLength(min: 0, max: 5)
+}
+
+input EventInput {
+  endDate: DateTime!
+  name: String!
+  startDate: DateTime!
+}
+
+type Mutation {
+  createEvent(data: EventInput!): Event!
+}
+
+type Query {
+  event(id: String!): Event
+  events: [Event!]! @listLength(min: 10, max: 20)
+  user(name: String!): User
+  users: [User!]! @listLength(min: 5, max: 5)
+}
+type User {
+  createdEvents: [Event!]! @listLength(min: 0, max: 2)
+  id: ID!
+    @examples(
+      values: [
+        "2ef43e8d-ef62-4a77-a33f-10c73f705127"
+        "1d20e36b-ec7e-4934-abb3-599c3d6704ef"
+        "c31ae9e5-da16-4848-a82f-9762c6202e60"
+        "102e2d65-d791-4407-a304-e2b685a34387"
+        "62d0c96a-38e7-4565-8163-23992f124fb3"
+      ]
+    )
+  username: String! @fake(type: colorName)
+}
